@@ -2,5 +2,6 @@
   "useMarkdownLinks": true,
   "newLinkFormat": "relative",
   "attachmentFolderPath": "/assets",
-  "autoConvertHtml": false
+  "autoConvertHtml": true,
+  "showLineNumber": false
 }
