@@ -1,23 +1,23 @@
-# 　JSP笔记
+# JSP 笔记
 
 ## 1. JDBC
 
-连接数据库：进入MySQL->bin目录 在地址栏输入“cmd” ，在打开的命令行中输入
+连接数据库：进入 MySQL->bin 目录 在地址栏输入“cmd” ，在打开的命令行中输入
 
 ”mysql -u root -p”，随后输入“root”进入数据库
 
-### 1.1. 一、常用Mysql命令
+### 1.1. 一、常用 Mysql 命令
 
 1. `show databases`; 显示所有数据库名称
 2. `create database 数据库名;` 创建数据库
 3. `use 数据库名;`  使用数据库
 4. `show tables;`  显示当前数据库中所有的表名
 
-### 1.2. 二、使用JDBC操作数据库的步骤
+### 1.2. 二、使用 JDBC 操作数据库的步骤
 
 1. 将数据库驱动导入到项目中
 
-   J2SE项目在jar文件上右键→Build Path→Add to Build Path
+   J2SE 项目在 jar 文件上右键→Build Path→Add to Build Path
 
 2. 加载数据库驱动（两种方法）
 
@@ -54,31 +54,31 @@
       2. Oracle：1521
       3. SQL Server：1433
 
-4. 创建对象，用于将Java中的字符串解析成数据库可以理解的SQL语句。
+4. 创建对象，用于将 Java 中的字符串解析成数据库可以理解的 SQL 语句。
 
    1. 语句对象分为：```java.sql.Statement```与```java.sql.PreparedStatement```接口
 
-   2. 当执行select语句时，需要调用语句对象的```executeQuery()```方法，此方法返回类型为```java.sql.ResultSet```接口类型的实例
-   3. 当执行insert，update，delete语句时需要调用语句对象的```executeUpdate()```方法，此方法返回类型为int类型，表示语句执行后影响表中数据的行数。
+   2. 当执行 select 语句时，需要调用语句对象的```executeQuery()```方法，此方法返回类型为```java.sql.ResultSet```接口类型的实例
+   3. 当执行 insert，update，delete 语句时需要调用语句对象的```executeUpdate()```方法，此方法返回类型为 int 类型，表示语句执行后影响表中数据的行数。
 
 5. 处理结果
-   1. ResultSet的next()方法，将结果集的游标<font color =red>向下</font>移动<font color=red>一行</font>。移动后游标找到数据返回true，否则返回false.
-   2. ResultSet的getXXX()方法，获得结果集中当前行指定列的信息。此方法的参数可以为<b>String</b>类型，也可以为<b>int</b>类型
+   1. ResultSet 的 next() 方法，将结果集的游标<font color =red>向下</font>移动<font color=red>一行</font>。移动后游标找到数据返回 true，否则返回 false.
+   2. ResultSet 的 getXXX() 方法，获得结果集中当前行指定列的信息。此方法的参数可以为<b>String</b>类型，也可以为<b>int</b>类型
 
 6. 关闭与数据库相关的对象
 
 ### 1.3. 三、 <b>```java.sql.Statement```</b>接口与```java.sql.PreparedStatement```接口的关系与区别？
 
-1. 关系：Statement是PreparedStatement的父接口
+1. 关系：Statement 是 PreparedStatement 的父接口
 2. 区别：
    1. 安全性
-      1. Statement无法防止SQL注入，安全性差
-      2. PreparedStatement可以防止SQL注入，安全性好
-   2. 效率：当批量执行同一条SQL语句时。
-      1. Statement每执行一次SQL语句，都会先编译再运行，效率低。
-      2. PrepareStatement只在第一次执行SQL语句时编译，从第二次开始不再编译直接执行，效率高。
+      1. Statement 无法防止 SQL 注入，安全性差
+      2. PreparedStatement 可以防止 SQL 注入，安全性好
+   2. 效率：当批量执行同一条 SQL 语句时。
+      1. Statement 每执行一次 SQL 语句，都会先编译再运行，效率低。
+      2. PrepareStatement 只在第一次执行 SQL 语句时编译，从第二次开始不再编译直接执行，效率高。
 
-### 1.4. 四、使用JDBC向表中添加数据
+### 1.4. 四、使用 JDBC 向表中添加数据
 
 1. 关闭数据库自动提交的功能，查询时因为不修改数据，所以不需要此操作
 
@@ -110,7 +110,7 @@ public class TestSelectDao {
   //调用当前类中名为selectById()的方法，查询满足条件的数据
   TestSelectDao testDao = new TestSelectDao();
   testDao.selectById(id);
-  
+
   sc.close();
  }
 
@@ -127,7 +127,7 @@ public class TestSelectDao {
    //加载数据库驱动
    Class.forName("com.mysql.cj.jdbc.Driver");
    //连接数据库
-   
+
     conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false", "root", "root");
     //创建select语句，用于查询满足条件的对象
     String sql="select t_id,t_name,t_email,t_birthday from test_table where t_id=?";
@@ -144,13 +144,13 @@ public class TestSelectDao {
      System.out.print(rs.getString("t_email")+"\t");
      System.out.print(rs.getString("t_birthday")+"\t");
     }
-   
+
    } catch (ClassNotFoundException e) {
-   
+
    System.out.println("数据库驱动加载失败！！！");
   }
   catch (SQLException e) {
-  
+
    e.printStackTrace();
   }finally {
    //关闭与数据库相关的对象
@@ -159,13 +159,13 @@ public class TestSelectDao {
     try {
      conn.close();
     } catch (SQLException e) {
-    
+
     }
    }
-   
+
   }
  }
- 
+
 }
 
 
@@ -192,10 +192,10 @@ public class TestUpdateDao {
   Scanner sc=new Scanner(System.in);
   System.out.println("请输入编号：");
   int id = sc.nextInt();
-  
+
   System.out.println("请输入出生日期：");
   String tempBirthday = sc.next();
-  
+
   //将String转换为Date
   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
   Date birthday = null;
@@ -246,9 +246,9 @@ public class TestUpdateDao {
    conn.rollback();
   } catch (ClassNotFoundException e) {
    System.out.println("数据库驱动加载失败！！！");
-   
+
   }catch (SQLException e) {
-   System.out.println("数据库异常！！！");                                                                       
+   System.out.println("数据库异常！！！");
    e.printStackTrace();
   }finally {
    //关闭与数据库相关的对象
@@ -260,11 +260,11 @@ public class TestUpdateDao {
      e.printStackTrace();
     }
    }
-   
+
   }
-  
+
   return 0;
-  
+
  }
 }
 ```
@@ -286,10 +286,10 @@ public class TestInsertDao {
   Scanner sc = new Scanner(System.in);
   System.out.print("请输入编号");
   int id = sc.nextInt();
-  
+
   System.out.print("请输入姓名");
   String name = sc.next();
-  
+
   System.out.print("请输入邮箱");
   String email = sc.next();
   //调用insert()方法，向表中添加一行新数据
@@ -350,7 +350,7 @@ public class TestInsertDao {
    }
   }
   return 0;
-  
+
  }
 }
 
@@ -372,17 +372,17 @@ import java.util.Scanner;
 public class TestTableDao {
 
  public static void main(String[] args) {
-  
+
   Scanner sc = new Scanner(System.in);  //从键盘接收编号
   System.out.println("请输入需要删除的编号：");
   int id = sc.nextInt();
-  
-  TestTableDao dao = new TestTableDao();  
+
+  TestTableDao dao = new TestTableDao();
   int i = dao.delete(id);//调用名为delete()的方法，删除表中的数据
   System.out.println(i>0?"删除成功":"删除失败");
  }
  /**
-  * 
+  *
   * @param id 需要删除的用户编号
   * @return 删除成功返回大于0的整数，否则返回0
   */
@@ -394,16 +394,16 @@ public class TestTableDao {
    conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/exe?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false", "root", "root");
    String sql = "delete from student where sid = ?"; //删除记录的SQL语句
    conn.setAutoCommit(false); // 关闭数据库自动提交功能
-   ps = conn.prepareStatement(sql); 
+   ps = conn.prepareStatement(sql);
    ps.setInt(1, id);//替换准备语句对象中的问号
    int rows = ps.executeUpdate();//使用准备语句对象执行delete语句，并获得update语句执行后影响表中数据的行数
-   
+
    if(rows >0) {
     conn.commit();
     return rows;
    }
    conn.rollback();
-   
+
   } catch (ClassNotFoundException e) {
    // TODO Auto-generated catch block
    System.out.println("数据库驱动加载失败！！！");
@@ -430,7 +430,7 @@ public class TestTableDao {
 
 ### 1.9. 九、封装查询结果的数据
 
- 1. 在com.test.entity包中创建表对应的实体类，并设置get()set()方法
+ 1. 在 com.test.entity 包中创建表对应的实体类，并设置 get()set() 方法
 
     ```java
     private Integer tId;
@@ -439,10 +439,9 @@ public class TestTableDao {
     private Date tBirhday;
     ```
 
-2.  
-```java
- 
+2.
 
+```java
    public Integer gettId() {
      return tId;
     }
@@ -474,7 +473,7 @@ public class TestTableDao {
 
    ```java
    public class TestTableDao {
-   
+
     public static void main(String[] args) {
      //调用selectAll()方法，查询表中所有的数据
      TestTableDao dao = new TestTableDao();
@@ -485,12 +484,12 @@ public class TestTableDao {
       for(TestTable t : list) {
        System.out.println(t.gettId() + "\t" + t.gettName() + "\t" + t.getTemail() + "\t" + t.getTbirhday());
       }
-      
+
      }else {
       //没有查询到数据
       System.out.println("没有查询到数据！！");
      }
-   
+
     }
     /**
      * 查询Test_table中所有数据
@@ -509,7 +508,7 @@ public class TestTableDao {
       ps=conn.prepareStatement(sql);
       //使用准备语句对象执行select语句，并将查询的结果存入到结果集
       rs = ps.executeQuery();
-      
+
       //创建List集合，用于备份结果集中的所有的数据
       List<TestTable> list = new ArrayList<>();
       //声明实体类的变量，用于保存结果集中的一行数据
@@ -524,12 +523,12 @@ public class TestTableDao {
        testTable.setTbirhday(rs.getDate("t_birthday"));
        //将实体类的对象添加到List集合中
        list.add(testTable);
-       
+
       }
       //循环结束后，返回list集合
       return list;
      } catch (ClassNotFoundException e) {
-       
+
       System.out.println("数据库驱动加载失败！！！");
      } catch (SQLException e) {
       System.out.println("数据库加载失败！！！");
@@ -544,64 +543,65 @@ public class TestTableDao {
      }
      //使用准备语句对象执行select语句，并将查询的结果存入结果集中
      return null;
-     
+
     }
    }
 ```
+
 ## 2. 程序模型
 
-### 2.1. 一、C/S（客户端/服务器）模型
+### 2.1. 一、C/S（客户端 / 服务器）模型
 
 1. 优点：客户体验非常好
-2. 缺点：如果升级包比较大，客户升级困难，对客户端PC配置要求高
+2. 缺点：如果升级包比较大，客户升级困难，对客户端 PC 配置要求高
 
-### 2.2. 二、B/S（浏览器/Web服务器 应用服务器）模型
+### 2.2. 二、B/S（浏览器 /Web 服务器 应用服务器）模型
 
-1. 优点：对客户端PC配置要求不高。程序升级时用户几乎感受不到。
-2. 缺点：客户体验不如C/S模型
+1. 优点：对客户端 PC 配置要求不高。程序升级时用户几乎感受不到。
+2. 缺点：客户体验不如 C/S 模型
 
 ### 2.3. 三、Tomcat
 
-1. Tomcat的配置
+1. Tomcat 的配置
 
-   解压/安装时不要放在中文目录下。
+   解压 / 安装时不要放在中文目录下。
 
    1. 配置环境变量
-      1. 必须先配置jdk的环境变量
+      1. 必须先配置 jdk 的环境变量
 
-      2. home_path：JDK的路径
+      2. home_path：JDK 的路径
 
-      3. jre_home：JDK的路径
+      3. jre_home：JDK 的路径
 
-2. Tomcat常用目录
+2. Tomcat 常用目录
 
-   1. bin目录：存放与Tomcat运行相关的批处理文件及Java类库
+   1. bin 目录：存放与 Tomcat 运行相关的批处理文件及 Java 类库
 
-   2. conf目录：存放Tomcat的配置文件
+   2. conf 目录：存放 Tomcat 的配置文件
 
-   3. lib目录：存放当前服务器所有站点公用的Java类库
+   3. lib 目录：存放当前服务器所有站点公用的 Java 类库
 
-   4. logs目录：存放日志文件
+   4. logs 目录：存放日志文件
 
-   5. webapps（web-applications）目录：存放当前服务器中所有的web应用（站点）
+   5. webapps（web-applications）目录：存放当前服务器中所有的 web 应用（站点）
 
-   6. work目录：存放站点生成的.class文件
+   6. work 目录：存放站点生成的。class 文件
 
-3. Tomcat属于Web服务器
+3. Tomcat 属于 Web 服务器
 
-4. 解析url：<http://www.baidu.com/bbs/index.html>
+4. 解析 url：<http://www.baidu.com/bbs/index.html>
 
-   1. http://：表示http协议，浏览器默认支持的协议，可以省略。
-   2. www：表示www服务
-   3. baidu.com：域名。通过DNS服务器可以将域名解析成IP地址或服务器名
+   1. http://：表示 http 协议，浏览器默认支持的协议，可以省略。
+   2. www：表示 www 服务
+   3. baidu.com：域名。通过 DNS 服务器可以将域名解析成 IP 地址或服务器名
    4. bbs：服务器中的目录
    5. index.html：服务器中的文件
 
-5. 修改默认Tomcat默认的端口号
+5. 修改默认 Tomcat 默认的端口号
 
-   1. Tomcat默认端口号为8080
+   1. Tomcat 默认端口号为 8080
 
-   2. 在Tomcat目录→conf目录→server.xml文件，更改port后的数值
+   2. 在 Tomcat 目录→conf 目录→server.xml 文件，更改 port 后的数值
 
       ```xml
        <Connector port="8080" protocol="HTTP/1.1"
@@ -611,36 +611,36 @@ public class TestTableDao {
 
 6. 公有空间与私有空间
 
-   1. 公有空间：WEB-INF目录以外的空间。公有空间中的资源用户可以访问可以下载。
-   2. 私有空间：WEB-INF目录被称为私有空间。私有空间中的资源用户不能直接下载。
+   1. 公有空间：WEB-INF 目录以外的空间。公有空间中的资源用户可以访问可以下载。
+   2. 私有空间：WEB-INF 目录被称为私有空间。私有空间中的资源用户不能直接下载。
 
 ## 3. Servlet
 
-### 3.1. 一、Servlet功能
+### 3.1. 一、Servlet 功能
 
 是<font color="red">Java</font>编写的存放在<font color="red">服务器</font>端的<font color="red">组件</font>。可以<font color="red">动态扩展</font>服务器的功能。
 
-### 3.2. 二、第一个Servlet的示例
+### 3.2. 二、第一个 Servlet 的示例
 
-1. <b>务必保证eclipse适用于Java EE的开发</b>
+1. <b>务必保证 eclipse 适用于 Java EE 的开发</b>
 
-2. 在eclipse中配置Tomcat服务器：
+2. 在 eclipse 中配置 Tomcat 服务器：
 
-   Window→Preferences→Server→Runtime Envoinrments，单击Add
+   Window→Preferences→Server→Runtime Envoinrments，单击 Add
 
    ![image-20220328074630995](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328074630995.png)
 
    ![image-20220328074418546](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328074418546.png)
 
-3. 选择Tomcat版本
+3. 选择 Tomcat 版本
 
    ![image-20220328074454913](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328074454913.png)
 
-4. 选择Tomcat的位置
+4. 选择 Tomcat 的位置
 
    ![image-20220328074520120](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328074520120.png)
 
-5. 创建JavaEE项目（Dynamic Web Project）
+5. 创建 JavaEE 项目（Dynamic Web Project）
 
    ![image-20220328074602603](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328074602603.png)
 
@@ -648,11 +648,11 @@ public class TestTableDao {
 
    ![image-20220328074737942](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328074737942.png)
 
-7. 设置生成web.xml文件（在上一步设置项目信息后，单击Next→Next，勾选“Generate web.xml deployment descriptor”
+7. 设置生成 web.xml 文件（在上一步设置项目信息后，单击 Next→Next，勾选“Generate web.xml deployment descriptor”
 
    ![image-20220328074807368](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328074807368.png)
 
-8. 在<b>公有空间(webapp)</b>目录下新建index.html文件，并写入如下内容：
+8. 在<b>公有空间 (webapp)</b>目录下新建 index.html 文件，并写入如下内容：
 
    ```html
    <!DOCTYPE html>
@@ -666,17 +666,17 @@ public class TestTableDao {
     <a href="first">第一个Servlet示例</a>
    </body>
    </html>
-   
+
    ```
 
 工作逻辑：
 
-1. 点击超链接时，index.html会向服务器发出请求，请求一个名为first的资源。
-2. 服务器接收到请求后，会在私有空间中的web.xml文件中查找与first相关的配置。
+1. 点击超链接时，index.html 会向服务器发出请求，请求一个名为 first 的资源。
+2. 服务器接收到请求后，会在私有空间中的 web.xml 文件中查找与 first 相关的配置。
 
-9. 配置web.xml文件
+9. 配置 web.xml 文件
 
-   1. 第一次打开web.xml文件会出现如下的视图：
+   1. 第一次打开 web.xml 文件会出现如下的视图：
 
       ![image-20220328075000240](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328075000240.png)
 
@@ -691,7 +691,7 @@ public class TestTableDao {
    <servlet-name>firstServlet</servlet-name>
    <servlet-class>com.test.controller.FirstServlet</servlet-class>
   </servlet>
-  
+
   <!-- 映射请求与类的关系 -->
   <servlet-mapping>
      <servlet-name>firstServlet</servlet-name>
@@ -700,11 +700,11 @@ public class TestTableDao {
   </servlet-mapping>
 ```
 
-根据web.xml文件中，<servlet>中<servlet-class>的配置，在该项目的“src/main/java”中创建包与类（复制com.test.controller.FirstServlet到Name处，eclipse会自动填写包名）。
+根据 web.xml 文件中，<servlet>中<servlet-class>的配置，在该项目的“src/main/java”中创建包与类（复制 com.test.controller.FirstServlet 到 Name 处，eclipse 会自动填写包名）。
 
 ![image-20220328075116790](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328075116790.png)
 
-并继承HttpServlet类，重写父类的service()方法。
+并继承 HttpServlet 类，重写父类的 service() 方法。
 
 代码如下：
 
@@ -713,7 +713,7 @@ public class TestTableDao {
    <servlet-name>firstServlet</servlet-name>
    <servlet-class>com.test.controller.FirstServlet</servlet-class>
   </servlet>
-  
+
   <!-- 映射请求与类的关系 -->
   <servlet-mapping>
      <servlet-name>firstServlet</servlet-name>
@@ -722,7 +722,7 @@ public class TestTableDao {
   </servlet-mapping>
 ```
 
-```java```
+```java
 package com.test.controller;
 
 import java.io.IOException;
@@ -740,13 +740,13 @@ public class FirstServlet extends HttpServlet {
  protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
   //声明输出流，用于向浏览器中输出数据
   PrintWriter out = arg1.getWriter();
-  
+
   out.println("<html>");
   out.println(" <body>");
   out.println(  "<div style ='color:#FF0000'>" + new Date() + "</div>");
   out.println(" </body>");
   out.println("</html>");
-  
+
   //刷新缓冲区
   out.flush();
         //关闭输出流
@@ -766,61 +766,61 @@ public class FirstServlet extends HttpServlet {
 
 ![image-20220328075253838](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328075253838.png)
 
-### 3.3. 三、Servlet的结构
+### 3.3. 三、Servlet 的结构
 
 <img src="C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328075447673.png" alt="image-20220328075447673" style="zoom:67%;" />
 
-1. javax.servlet.Servlet接口：声明了Servlet中最基础的方法
-2. javax.servlet.GenericServlet类：实现了Servlet接口，并重写了接口中的方法
-3. javax.servlet.http.HttpServlet类：对http协议进行了优化
-4. 创建自定义的servlet，<font color="red">直接或间接实现servlet接口</font>.
+1. javax.servlet.Servlet 接口：声明了 Servlet 中最基础的方法
+2. javax.servlet.GenericServlet 类：实现了 Servlet 接口，并重写了接口中的方法
+3. javax.servlet.http.HttpServlet 类：对 http 协议进行了优化
+4. 创建自定义的 servlet，<font color="red">直接或间接实现 servlet 接口</font>.
 
-### 3.4. 四、servlet生命周期
+### 3.4. 四、servlet 生命周期
 
-1. 当浏览器向服务器发出一个请求，请求一个servlet资源时；
-2. 服务器接收到请求后，会在内存（缓存）中查找是否存在此servlet的实例
-   1. 如果服务器没有在内存中找到该servlet实例时，服务器会创建此servlet的实例，并将实例加载到内存中，并调用servlet实例的init()进行初始化，再调用service()方法对请求做出响应
-   2. 如果服务器在内存中找到了该servlet的实例，服务器会直接调用servlet实例的service()方法对请求做出响应
-   3. 当服务器发现内存某个servlet实例在一段时间内没有被任何请求访问时，服务器会调用servlet实例的destroy()方法，销毁此servlet实例
+1. 当浏览器向服务器发出一个请求，请求一个 servlet 资源时；
+2. 服务器接收到请求后，会在内存（缓存）中查找是否存在此 servlet 的实例
+   1. 如果服务器没有在内存中找到该 servlet 实例时，服务器会创建此 servlet 的实例，并将实例加载到内存中，并调用 servlet 实例的 init() 进行初始化，再调用 service() 方法对请求做出响应
+   2. 如果服务器在内存中找到了该 servlet 的实例，服务器会直接调用 servlet 实例的 service() 方法对请求做出响应
+   3. 当服务器发现内存某个 servlet 实例在一段时间内没有被任何请求访问时，服务器会调用 servlet 实例的 destroy() 方法，销毁此 servlet 实例
 
 ## 4. 请求与响应
 
 ### 4.1. 一、```javax.servlet.http.HttpServletRequest```接口：请求
 
-1. HttpServletRequest常用方法：
+1. HttpServletRequest 常用方法：
    1. ```getParameter("名字")```：获得请求中指定名字的数据的数据。返回类型一定为<font color="red">String</font>。
    2. ```setCharcterEncoding("字符集")```：设置字符集
-   3. ```getParameterValues("名字")```：获得请求中名字相同的一组数据。返回类型一定为<font color="red">String[]数组</font>
-   3. ```getParameterValues("资源名称")```：获得指定的资源。返回类型为javax.RequestDispatcher类型
+   3. ```getParameterValues("名字")```：获得请求中名字相同的一组数据。返回类型一定为<font color="red">String[] 数组</font>
+   3. ```getParameterValues("资源名称")```：获得指定的资源。返回类型为 javax.RequestDispatcher 类型
    3. ```setAtrribute(“名字,数据”)```：将数据以指定的名字存入到请求中。
    3. ```getAttribute(“名字”)```：从请求中获得指定名字的数据。返回类型一定为<font color="red"><b>java.lang.Object</b></font>类型
 
 ### 4.2. 二、```java.servlet.http.HttpServletResponse```接口：响应
 
-1. HttpServletRequest常用方法：
+1. HttpServletRequest 常用方法：
    1. ```setCharacterEncoding("字符集")```：设置字符集
    2. ```setContentType("text/html;charset=字符集")```：设置目标浏览器显示的内容及字符集
    2. ```sendRedirect("资源名")```：重定向
-   2. ```encodeRedirectURL(“资源名”)```：保证重定向、表单提交、超链接时不丢失SessionID
+   2. ```encodeRedirectURL(“资源名”)```：保证重定向、表单提交、超链接时不丢失 SessionID
 
 实例（在浏览器上根据用户输入的行和列，输出表格）：
 
-html部分（省略`<html>`等公共标签，只写`<body>`里的部分）：
+html 部分（省略`<html>`等公共标签，只写`<body>`里的部分）：
 
 ```html
 <form action="table" method="post">
   <p>
   行：<input type="number" name="rows" required="required">
   </p>
-  
+
   <p>
   列：<input type="number" name="cols" required="required">
   </p>
-  
+
   <p>
    <button type="submit">画表格</button>
    <button type="reset">重置</button>
-  
+
   </p>
  </form>
 ```
@@ -829,7 +829,7 @@ html部分（省略`<html>`等公共标签，只写`<body>`里的部分）：
 
 <img src="C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328122356224.png" alt="image-20220328122356224" style="zoom:80%;" />
 
-编写xml代码：
+编写 xml 代码：
 
 ```xml
 <servlet>
@@ -842,7 +842,7 @@ html部分（省略`<html>`等公共标签，只写`<body>`里的部分）：
 </servlet-mapping>
 ```
 
-新建TableServlet.java文件
+新建 TableServlet.java 文件
 
 ```java
 public class TableServlet extends HttpServlet{
@@ -857,10 +857,10 @@ public class TableServlet extends HttpServlet{
   //获得用户在浏览器中输入的行和列
   int rows = Integer.parseInt(arg0.getParameter("rows"));
   int cols = Integer.parseInt(arg0.getParameter("cols"));
-  
+
   //根据用户输入的行和列，向浏览器输出表格
   PrintWriter out = arg1.getWriter();
-  
+
   out.println("<html>");
   out.println(" <body>");
   out.println(  "<table border='1'>");
@@ -873,7 +873,7 @@ public class TableServlet extends HttpServlet{
    }
    out.println("  </tr>");
   }
-  
+
   out.println(  "</table>");
   out.println(  "<br>");
   out.println("  <div><a href='index.html'>重新画表格</a></div>");
@@ -887,7 +887,7 @@ public class TableServlet extends HttpServlet{
 
 读取复选框中的数据：
 
-html部分：
+html 部分：
 
 ```html
 <form action="values" method="post">
@@ -899,7 +899,7 @@ html部分：
  </form>
 ```
 
-编写xml代码：
+编写 xml 代码：
 
 ```xml
 <servlet>
@@ -912,7 +912,7 @@ html部分：
   </servlet-mapping>
 ```
 
-java部分：
+java 部分：
 
 ```java
 public class ValueServlet extends HttpServlet{
@@ -920,7 +920,7 @@ public class ValueServlet extends HttpServlet{
  @Override
  protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
   //获得用户在浏览器中输入了哪些复选框
-  
+
   String[] array=arg0.getParameterValues("v1");
   for(String s: array) {
    System.out.println(s);
@@ -930,7 +930,7 @@ public class ValueServlet extends HttpServlet{
 
 ```
 
-更改web.xml启动时的页面：
+更改 web.xml 启动时的页面：
 
 ```xml
 <welcome-file>select.html</welcome-file>
@@ -940,31 +940,31 @@ public class ValueServlet extends HttpServlet{
 
 ### 5.1. 一、JavaBean
 
-就是Java类。
+就是 Java 类。
 
-### 5.2. 二、JavaBean的特征
+### 5.2. 二、JavaBean 的特征
 
-1. JavaBean是一个公有的类。
-2. JavaBean需要提供一个无参的构造方法。
-3. JavaBean需要为private的成员变量提供public的getter或setter方法。
-4. JavaBean需要实现序列化接口。
+1. JavaBean 是一个公有的类。
+2. JavaBean 需要提供一个无参的构造方法。
+3. JavaBean 需要为 private 的成员变量提供 public 的 getter 或 setter 方法。
+4. JavaBean 需要实现序列化接口。
 
 ## 6. 线程安全
 
-### 6.1. 一、Servlet与线程安全
+### 6.1. 一、Servlet 与线程安全
 
-1. Servlet中成员变量是线程不安全的。
-2. Servlet中方法的局部变量是线程安全的。
+1. Servlet 中成员变量是线程不安全的。
+2. Servlet 中方法的局部变量是线程安全的。
 
 ### 6.2. 二、范围对象与线程安全
 
-## 7. 请求转发(Forward)与重定向(Redirect)
+## 7. 请求转发 (Forward) 与重定向 (Redirect)
 
-### 7.1. 一、Web资源之间只有三种关系
+### 7.1. 一、Web 资源之间只有三种关系
 
 ​ 包含、请求转发、重定向
 
-### 7.2. 二、 Web资源：Servlet、html页面、JSP页面
+### 7.2. 二、 Web 资源：Servlet、html 页面、JSP 页面
 
 ### 7.3. 三、请求转发与重定向的共同点
 
@@ -1001,68 +1001,68 @@ resp.sendRedirect("error.html");
 2. 重定向的特征
    1. 在重定向的过程中会产生两个请求和两个响应
    2. 浏览器地址栏中的内容会发生改变
-   3. 重定向的过程中不能使用HttpServletRequest传递数据
+   3. 重定向的过程中不能使用 HttpServletRequest 传递数据
    4. 重定向可以跳转到其他站点中
 
 ## 8. JSP(Java Server Page)
 
-### 8.1. 一、JSP页面与HTML页面的区别
+### 8.1. 一、JSP 页面与 HTML 页面的区别
 
-1. HTML页面：静态页面，只能出现静态元素。如：html标签，css代码，js代码
-2. JSP页面：动态页面。动态页面中除了可以出现静态元素外，还可以出现动态元素。如：Java代码，JSP标签等
+1. HTML 页面：静态页面，只能出现静态元素。如：html 标签，css 代码，js 代码
+2. JSP 页面：动态页面。动态页面中除了可以出现静态元素外，还可以出现动态元素。如：Java 代码，JSP 标签等
 
-### 8.2. 二、JSP的本质就是一个Servlet
+### 8.2. 二、JSP 的本质就是一个 Servlet
 
-### 8.3. 三、JSP在制作视图层（画页面）时，比Servlet效率高
+### 8.3. 三、JSP 在制作视图层（画页面）时，比 Servlet 效率高
 
-### 8.4. 四、JSP的工作原理（为什么JSP程序在第一次运行时比较慢）
+### 8.4. 四、JSP 的工作原理（为什么 JSP 程序在第一次运行时比较慢）
 
-1. 第一次运行JSP页面时，服务器会根据JSP页面生成对应的java文件，再根据java文件编译生成.class文件，再执行.class文件中相应的方法。
-2. 从第二次开始再运行JSP页面时，服务器会直接调用.class文件相应的方法，而不再编译。
+1. 第一次运行 JSP 页面时，服务器会根据 JSP 页面生成对应的 java 文件，再根据 java 文件编译生成。class 文件，再执行。class 文件中相应的方法。
+2. 从第二次开始再运行 JSP 页面时，服务器会直接调用。class 文件相应的方法，而不再编译。
 
 ### 8.5. 五、页面中的动态元素
 
-1. JSP页面中的指令元素。JSP页面只有三个指令元素：page，include，taglib
+1. JSP 页面中的指令元素。JSP 页面只有三个指令元素：page，include，taglib
    1. 指令元素的格式：```<%@指令元素名 属性="值"[属性="值"]%>```
 
-   2. 同一个指令在一个JSP页面中可以重复出现。
+   2. 同一个指令在一个 JSP 页面中可以重复出现。
 
-   3. page指令：设置JSP页面的属性
+   3. page 指令：设置 JSP 页面的属性
 
-      1. language：设置当前JSP页面中可以使用Java代码。目前为止只能Java
-      2. import：导包。该属性是page指令中唯一可以重复出现的属性，也可以使用一个import属性导入多个类，类和类之间用逗号分隔
+      1. language：设置当前 JSP 页面中可以使用 Java 代码。目前为止只能 Java
+      2. import：导包。该属性是 page 指令中唯一可以重复出现的属性，也可以使用一个 import 属性导入多个类，类和类之间用逗号分隔
       2. errorPage：当前页面出现运行异常时，自动转发到的页面
-      4. isErrorPage：设置当前JSP页面是否为错误页面，默认为false。如果此属性为True，则表示当前的JSP页面比普通的JSP页面多一个内置对象
+      4. isErrorPage：设置当前 JSP 页面是否为错误页面，默认为 false。如果此属性为 True，则表示当前的 JSP 页面比普通的 JSP 页面多一个内置对象
 
-      5. session：设置当前的JSP页面是否可以使用session范围对象，默认为true
+      5. session：设置当前的 JSP 页面是否可以使用 session 范围对象，默认为 true
 
-      6. pageEcoding：设置当前JSP页面的字符集。默认为ISO-8859-1
+      6. pageEcoding：设置当前 JSP 页面的字符集。默认为 ISO-8859-1
 
-      7. contentType：设置浏览器显示的内容及字符集。默认为text/html;charset=ISO-8859-1
+      7. contentType：设置浏览器显示的内容及字符集。默认为 text/html;charset=ISO-8859-1
 
-      4. include指令：静态包含
+      4. include 指令：静态包含
            1. 格式：```<%@include file="文件名"%>```
-           2. 静态包含：当服务器将JSP页面编译成.java文件时，将指定的文件包含到页面中。
+           2. 静态包含：当服务器将 JSP 页面编译成。java 文件时，将指定的文件包含到页面中。
 
-2. taglib指令：在JSP页面中导入其他的标签库
+2. taglib 指令：在 JSP 页面中导入其他的标签库
 
-3. JSP页面中的Java代码
+3. JSP 页面中的 Java 代码
 
-   1. 声明：```<%! Java代码 %>```，声明中的Java代码会出现在类的里面方法的外面，成为类的成员（成员变量与成员方法）。声明中可以出现：变量、方法、块、内部类。声明中的变量是线程不安全的。
+   1. 声明：```<%! Java代码 %>```，声明中的 Java 代码会出现在类的里面方法的外面，成为类的成员（成员变量与成员方法）。声明中可以出现：变量、方法、块、内部类。声明中的变量是线程不安全的。
 
-   2. 脚本：```<% Java代码%>```，脚本中的代码会出现在jspService()方法的内部，成为方法的局部代码。脚本中可以出现：变量，判断、循环。脚本中的代码是线程安全的。
+   2. 脚本：```<% Java代码%>```，脚本中的代码会出现在 jspService() 方法的内部，成为方法的局部代码。脚本中可以出现：变量，判断、循环。脚本中的代码是线程安全的。
 
-   3. 表达式：```<%=一行java代码&>```：将Java代码的结果显示在JSP页面中，表达式中的代码会出现在out.print()方法的括号内，所以表达式中的Java代码**不能用分号表示结束**。表达式中可以调用方法，但方法必须有返回数据
+   3. 表达式：```<%=一行java代码&>```：将 Java 代码的结果显示在 JSP 页面中，表达式中的代码会出现在 out.print() 方法的括号内，所以表达式中的 Java 代码**不能用分号表示结束**。表达式中可以调用方法，但方法必须有返回数据
 
-4. JSP页面中的JSP标签
+4. JSP 页面中的 JSP 标签
 
-   1. JSP标签：区分大小写
+   1. JSP 标签：区分大小写
 
    2. ```<jsp:include>```标签：动态包含。
 
    3. 格式：```<jsp:include page=“页面名” flush=“true/false(默认)”></jsp:include>```
 
-   4. 动态包含（运行时包含）：当服务器运行JSP页面对应的.class文件时，页面将指定的页面包含过来一起显示。
+   4. 动态包含（运行时包含）：当服务器运行 JSP 页面对应的。class 文件时，页面将指定的页面包含过来一起显示。
 
 ```jsp
 <!--动态包含-->
@@ -1078,6 +1078,7 @@ resp.sendRedirect("error.html");
 2. 格式：```<jsp:forward page=“页面名”></jsp:forward>```
 
 ```jsp
+
 <jsp:include page="sub_page.jsp">
  <jsp:param values="123" name="msg"/>
 </jsp:include>
@@ -1085,6 +1086,7 @@ resp.sendRedirect("error.html");
     这是子页面
 </div>
 <%=request.getParameter("msg") %>
+
 ```
 
 4. 注释
@@ -1131,51 +1133,66 @@ resp.sendRedirect("error.html");
    也称为application，当服务器启动时创建，当服务器关闭时销毁。一个服务器中所有的web站点共用一个application对象。通常用于保存服务器的信息
 
    ```java
-   // 获得当前服务器ServletContext对象
+
+   // 获得当前服务器 ServletContext 对象
    ServletContext application = this.getServletContext();
-   // 向ServletContext中添加传递数据
+   // 向 ServletContext 中添加传递数据
    application.setAttribute("message","<script>alert('服务器异常，请与管理员联系');</script>");
+
    ```
 
 2. ```javax.servlet.http.HttpSession```：是用于解决HTTP协议无状态的方法之一。当浏览器向服务器发出第一个请求时，服务器会为浏览器创建session对象。当session超时或关闭浏览器，或调用session的invalidate()方法都会销毁session对象。session与用户是一对一的关系，所以session通常用于保存用户的个人信息（如登录用户信息，购物车等）。
 
    ```java
-   //获得session方法一：如果浏览器有session对象则返回session。如果浏览器没有session对象则返回null
+
+   // 获得 session 方法一：如果浏览器有 session 对象则返回 session。如果浏览器没有 session 对象则返回 null
    //         HttpSession session1 = req.getSession();
-   //获得session方法二：如果浏览器有session对象则返回session。如果浏览器没有session对象则为浏览器创建新的session对象（推荐使用）
+   // 获得 session 方法二：如果浏览器有 session 对象则返回 session。如果浏览器没有 session 对象则为浏览器创建新的 session 对象（推荐使用）
       HttpSession session2 = req.getSession(true);
+
    ```
 
    ```java
-   //获得session的ID
+
+   // 获得 session 的 ID
             System.out.println(session2.getId());
-   //获得session的创建时间，返回long类型
+   // 获得 session 的创建时间，返回 long 类型
             System.out.println(session2.getCreationTime());
-   //获得session最后一次被访问的时间，返回long类型
+   // 获得 session 最后一次被访问的时间，返回 long 类型
          System.out.println(session2.getLastAccessedTime());
+
    ```
 
    ```java
-            //设置单个session的有效时间
-            //获得session的有效时间，单位为秒
+
+            // 设置单个 session 的有效时间
+            // 获得 session 的有效时间，单位为秒
             System.out.println(session2.getMaxInactiveInterval());
-            //设置session的有效时间
+            // 设置 session 的有效时间
             session2.setMaxInactiveInterval(60 *60);
     System.out.println(session2.getMaxInactiveInterval());
+
    ```
 
    ```xml
-     <!--设置当前站点中的Session的有效时间 -->
+
+     <!-- 设置当前站点中的 Session 的有效时间 -->
+
      <session-config>
+
      <!-- 单位为分钟 -->
+
      <session-timeout>10</session-timeout>
      </session-config>
+
    ```
 
    ```java
-   //无条件销毁session，当销毁session之后再向session中读取数据时，程序会抛出java.lang.IllegalStateException
+
+   // 无条件销毁 session，当销毁 session 之后再向 session 中读取数据时，程序会抛出 java.lang.IllegalStateException
             session2.invalidate();
             session2.setAttribute("message", "<script>alert('服务器宕机了，请与管理员联系');</script>");
+
    ```
 
 3. ```javax.servlet.http.httpServletRequest```：当浏览器向服务器发出请求，服务器接收到请求后会创建出request对象。当服务器对请求作出响应时，request对象会随之销毁。通常用于保存资源之间临时的数据。
