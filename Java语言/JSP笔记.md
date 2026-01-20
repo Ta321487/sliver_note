@@ -685,6 +685,7 @@ public class TestTableDao {
 ![image-20220328075026906](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328075026906.png)
 
 编写如下代码：
+
 ```xml
 <servlet>
    <servlet-name>firstServlet</servlet-name>
@@ -707,6 +708,7 @@ public class TestTableDao {
 
 代码如下：
 
+```xml
 <servlet>
    <servlet-name>firstServlet</servlet-name>
    <servlet-class>com.test.controller.FirstServlet</servlet-class>
@@ -719,9 +721,38 @@ public class TestTableDao {
      <url-pattern>/first</url-pattern>
   </servlet-mapping>
 ```
-```java
-```
+package com.test.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class FirstServlet extends HttpServlet {
+
+ @Override
+ protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
+  //声明输出流，用于向浏览器中输出数据
+  PrintWriter out = arg1.getWriter();
+  
+  out.println("<html>");
+  out.println(" <body>");
+  out.println(  "<div style ='color:#FF0000'>" + new Date() + "</div>");
+  out.println(" </body>");
+  out.println("</html>");
+  
+  //刷新缓冲区
+  out.flush();
+        //关闭输出流
+  out.close();
+ }
+
+}
+```
 
 程序运行效果如下：
 
