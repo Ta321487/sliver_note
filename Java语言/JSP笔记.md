@@ -685,7 +685,6 @@ public class TestTableDao {
 ![image-20220328075026906](C:\Users\谭政\AppData\Roaming\Typora\typora-user-images\image-20220328075026906.png)
 
 编写如下代码：
-
 ```xml
 <servlet>
    <servlet-name>firstServlet</servlet-name>
@@ -708,7 +707,6 @@ public class TestTableDao {
 
 代码如下：
 
-```xml
 <servlet>
    <servlet-name>firstServlet</servlet-name>
    <servlet-class>com.test.controller.FirstServlet</servlet-class>
